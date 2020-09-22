@@ -227,6 +227,15 @@ input[type=submit], input[type=reset]
     border-radius: 4px;
     cursor: pointer;
 }
+.contact button
+{
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 input[type]:focus
 {
     border: 1px solid #64ee42;

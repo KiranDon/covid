@@ -143,26 +143,20 @@
         <form action="covid_user_data.php" method="POST"  autocomplete="off">
             <div class="feild">
                 <label for="name" >Name</label>
-                <input type="text" name="name" placeholder="Chris Hemsworth" required>
+                <input type="text" name="name" id="name" placeholder="Chris Hemsworth" required>
             </div>
             <div class="feild">
                 <label for="phone" >Phone</label>
-                <input type="number" name="number" placeholder="9109109109" required>
+                <input type="number" name="number" id="phone" placeholder="9109109109" required>
             </div>
             <div class="feild">
                 <label for="email" >E-mail</label>
-                <input type="email" name="email" placeholder="example@domain.com" required>
+                <input type="email" name="email" id="email" placeholder="example@domain.com" required>
             </div>
             <div class="feild">
-                <label for="age" >Age Group</label>
-                <select name="age">
-                    <option>Select your age group</option>
-                    <option value="0-15">0-15</option>
-                    <option value="16-25">16-25</option>
-                    <option value="25-36">25-35</option>
-                    <option value="35-50">35-50</option>
-                    <option value="above 50">above 50</option>
-                </select>
+                <label for="age" >Enter Age: </label>
+                <input type="number" name="number" id="age" placeholder="--" required>
+
                 <div class="feild">
                     <label for="gender" >Gender</label>
                     <input type="radio" name="gender" value="Male" placeholder="example@domain.com">Male
@@ -171,10 +165,11 @@
                 </div>
                 <div class="feild">
                     <label for="symptoms" >Any Symptoms?</label>
-                    <textarea name="symptoms" rows="6" placeholder="Mention your symptoms here..."></textarea>
+                    <textarea name="symptoms" rows="6" id="symptomsBox" placeholder="Mention your symptoms here..."></textarea>
                 </div>
                 <div class="buttons">
-                    <input type="submit" value="Submit">
+                    <!-- <input type="submit" value="Submit"> -->
+                    <button id="submitBtn">Submit</button>
                     <input type="reset" value="Reset">
                 </div>
             </div>
@@ -201,7 +196,62 @@
             document.getElementById("td").innerHTML = data['Global']['TotalDeaths'];
         })
     }
-    
 </script>
+
+    <!-- //FireBase -->
+
+
+<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-database.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script>
+
+<script>
+  
+  var firebaseConfig = {
+    apiKey: "AIzaSyB5ql1nA3Z5VfQETQ5eeUCI-XTHSYoYFZU",
+    authDomain: "covid-19-35d7e.firebaseapp.com",
+    databaseURL: "https://covid-19-35d7e.firebaseio.com",
+    projectId: "covid-19-35d7e",
+    storageBucket: "covid-19-35d7e.appspot.com",
+    messagingSenderId: "411207287115",
+    appId: "1:411207287115:web:699aa7b9f018e1e00528ce",
+    measurementId: "G-DKK74NEVK1"
+  };
+  // Initialize Firebase
+
+
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+
+  const name = document.getElementById('name');
+  const phone = document.getElementById('phone');
+  const email = document.getElementById('email');
+  const age = document.getElementById('age');
+  const gender = document.getElementsByName('gender');
+  const symptomsBox = document.getElementById('symptomsBox');
+  var submitBtn = document.getElementById('submitBtn');
+
+
+  const db = firebase.database();
+  const rootRef = db.ref('users');
+
+  submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      rootRef.child(name.value).set({
+          name: name.value,
+          phone: phone.value,
+          email: email.value,
+          age: age.value,
+          symptoms: symptomsBox.value
+      });
+  });
+
+
+
+</script>
+    
+
 </body>
 </html>
